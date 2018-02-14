@@ -35,12 +35,14 @@ spec:
         - name: GET_HOSTS_FROM
           value: dns
         readinessProbe:
-          tcpSocket:
+          httpGet:
+            path: /
             port: 8080
           initialDelaySeconds: 20
           periodSeconds: 10
         livenessProbe:
-          tcpSocket:
+          httpGet:
+            path: /
             port: 8080
-          initialDelaySeconds: 5
+          initialDelaySeconds: 30
           periodSeconds: 5
