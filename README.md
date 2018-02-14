@@ -10,7 +10,11 @@ To build this builder, run the following command in this directory.
     $ gcloud container builds submit . --config=cloudbuild.yaml
 
 
-## Force k8s to rollout new image, since it's only tagged latest
+## Force k8s to rollout new image
 ```
-kubectl set image deployment/testjava testjava=gcr.io/$PROJECT_ID/spring-boot:latest
+gcloud container images list-tags gcr.io/kenthua-testing/spring-boot --format=yaml
+```
+Extract the sha256
+```
+kubectl set image deployment/testjava testjava=gcr.io/$PROJECT_ID/spring-boot:@sha256:$YOUR_SHA_256
 ```
