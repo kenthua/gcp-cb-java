@@ -2,5 +2,10 @@ steps:
 - name: 'gcr.io/cloud-builders/mvn'
   args: ['install']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/spring-boot', '.']
+  args: [
+    'build', 
+    '--tag=gcr.io/$PROJECT_ID/spring-boot:latest', 
+    '--tag=gcr.io/$PROJECT_ID/spring-boot:$SHORT_SHA'
+    '.'
+  ]
 images: ['gcr.io/$PROJECT_ID/spring-boot']
