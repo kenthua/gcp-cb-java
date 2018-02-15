@@ -1,17 +1,38 @@
-# Tool builder: `gcr.io/cloud-builders/mvn`
+Leveraging the sample spring-boot java hello world app from the container builder examples, deploy the app in GKE
 
-This Container Builder build step runs Maven. It also includes a number of
-dependencies that are precached within the image.
+## Getting started
+Enable the appropriate APIs
+```
+gcloud services enable --async \
+  container.googleapis.com \
+  cloudapis.googleapis.com \
+  cloudbuild.googleapis.com \
+  sourcerepo.googleapis.com \
+  compute.googleapis.com \
+  storage-component.googleapis.com \
+  containerregistry.googleapis.com \
+  logging.googleapis.com
+```
 
-## Building this builder
+Grant the container builder service access to the GKE API's to apply changes to the cluster later
+```
+PROJECT_NUMBER=$(gcloud projects describe ${PROJECT_ID} --format='value(projectNumber)')
 
-To build this builder, run the following command in this directory.
+gcloud projects add-iam-policy-binding ${PROJECT_NUMBER} \
+  --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
+  --role=roles/container.developer
+```
 
-    $ gcloud container builds submit . --config=cloudbuild.yaml
+Create a cluster
+```
+gcloud container clusters create cb-cluster
+```
 
-* Clone this repo
-* Associate it with GC Source Repositories
-* Create a build trigger under GC Container Registry
+Fork this repo
+
+Associate your forked repo with [GC Source Repositories](https://cloud.google.com/source-repositories/docs/connecting-hosted-repositories)
+
+* Create a build trigger under [GC Container Registry](https://cloud.google.com/container-builder/docs/running-builds/automate-builds)
   * Provide a name
   * Trigger Type: `branch`
   * Build configuration: `cloudbuild.yaml`
