@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name:  sb-hello-world
-        image: gcr.io/kenthua-testing/spring-boot:latest
+        image: gcr.io/##PROJECT_ID##/spring-boot:latest
         env:
         - name: GET_HOSTS_FROM
           value: dns
