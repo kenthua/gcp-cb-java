@@ -9,7 +9,7 @@ steps:
     '.'
   ]
 - id: 'Apply changes to k8s.yaml'
-  name: 'gcr.io/cloud-builders/ubuntu'
+  name: 'ubuntu'
   args: [
         'sed', '-i',
         's|gcr.io/$PROJECT_ID/$_IMAGE_NAME:.*|gcr.io/$PROJECT_ID/$_IMAGE_NAME:$SHORT_SHA|g',
