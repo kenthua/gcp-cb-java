@@ -36,6 +36,13 @@ Associate your forked repo with [GC Source Repositories](https://cloud.google.co
   * Provide a name
   * Trigger Type: `branch`
   * Build configuration: `cloudbuild.yaml`
+  * Substitution Variables:
+  ```
+  _IMAGE_NAME = spring-boot
+  _ZONE = us-central1-a
+  _CLUSTER = test-cluster
+  ```
+
 
 ## Deployment
 ```
@@ -44,7 +51,7 @@ export PROJECT_ID=<YOUR_PROJECT_ID>
 
 Replace PROJECT_ID
 ```
-sed -i "s/##PROJECT_ID##/${PROJECT_ID}/g" k8s.yaml
+sed -i "s/kenthua-testing/${PROJECT_ID}/g" k8s.yaml
 ```
 
 Deploy onto your kubernetes instance
