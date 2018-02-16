@@ -8,4 +8,17 @@ steps:
     '--tag=gcr.io/$PROJECT_ID/spring-boot:$SHORT_SHA',
     '.'
   ]
+- id: 'Apply changes to k8s.yaml'
+  name: 'gcr.io/cloud-builders/ubuntu'
+  args: [
+        'sed', '-i',
+        's|gcr.io/$PROJECT_ID/$_IMAGE_NAME:.*|gcr.io/$PROJECT_ID/$_IMAGE_NAME:$SHORT_SHA|g',
+        'k8s.yaml'
+  ]
+- id: 'Kubectl apply'
+  name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'k8s.yaml']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=$_ZONE'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=$_CLUSTER'  
 images: ['gcr.io/$PROJECT_ID/spring-boot']
